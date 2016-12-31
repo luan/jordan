@@ -1,0 +1,9 @@
+---
+applications:
+- name: jordan
+  no-route: true
+  command: jordan
+  buildpack: go_buildpack
+  health-check-type: none
+  env:
+    GOPACKAGENAME: jordan
