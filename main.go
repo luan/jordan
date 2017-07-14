@@ -25,7 +25,7 @@ Loop:
 			switch ev := msg.Data.(type) {
 			case *slack.MessageEvent:
 				if ev.Msg.Type == "message" && ev.Msg.SubType != "message_deleted" && strings.Contains(ev.Msg.Text, "<!here|@here>") {
-					reply := fmt.Sprintf("Hello <@%s>, please avoid using `@here` in this channel. Read the channel topic to determine how to reach channel members.", ev.Msg.User)
+					reply := fmt.Sprintf("Hello <@%s>, please avoid using `@here` in this channel. Please mention the team member(s) listed as interrupt in the channel topic instead.", ev.Msg.User)
 					rtm.SendMessage(rtm.NewOutgoingMessage(reply, ev.Msg.Channel))
 				}
 
