@@ -24,7 +24,7 @@ Loop:
 		case msg := <-rtm.IncomingEvents:
 			switch ev := msg.Data.(type) {
 			case *slack.MessageEvent:
-				if ev.Msg.Type == "message" && ev.Msg.SubType != "message_deleted" && strings.Contains(ev.Msg.Text, "<!here|@here>") {
+				if ev.Msg.Type == "message" && ev.Msg.SubType != "message_deleted" && containsHereText(ev.Msg.Text) {
 					reply := fmt.Sprintf("Hello <@%s>, please avoid using `@here` in this channel. Read the channel topic to determine how to reach channel members.", ev.Msg.User)
 					rtm.SendMessage(rtm.NewOutgoingMessage(reply, ev.Msg.Channel))
 				}
@@ -40,4 +40,8 @@ Loop:
 			}
 		}
 	}
+}
+
+func containsHereText(text string) bool {
+	return strings.Contains(text, "<!here>") || strings.Contains(text, "<!here|@here>")
 }
